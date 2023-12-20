@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Auth;
 
 class AuthAdmin
 {
@@ -16,6 +17,10 @@ class AuthAdmin
      */
     public function handle(Request $request, Closure $next)
     {
+         if(Auth::user()->utype != "ADM"){
+            session()->flash();
+            return ridirect()->route('login');
+         }
         return $next($request);
     }
 }
